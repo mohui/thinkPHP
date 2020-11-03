@@ -1,0 +1,35 @@
+<html>
+	<body>
+	<h1>商品信息</h1>
+		<table border=1>
+		<tr>
+			<td>ID</td>
+			<td>名称</td>
+			<td>上架</td>
+			<td>新品</td>
+			<td>热卖</td>
+		</tr>
+		<foreach name='re' item="v">
+		<tr>
+			<td>{$v.t_id}</td>
+			<td>{$v.t_name}</td>
+			<td>
+			<if condition="($v.t_shang eq 1)"> √
+			<else /> ×
+			</if>
+			</td>
+			<td>
+			<if condition="($v.t_new eq 1)"> √
+			<else /> ×
+			</if>
+			</td>
+			<td>
+			<if condition="($v.t_how eq 1)"> √
+			<else /> ×
+			</if>
+			</td>
+		</tr>
+		</foreach>
+		</table>
+	</body>
+</html>

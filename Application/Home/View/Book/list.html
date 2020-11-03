@@ -1,0 +1,72 @@
+<html id='list'>
+	<body>
+	<input type="text" name="search" id="search" />
+	<input type="button" value="搜索" onclick="sousuo()" />
+	<input type="button" value="批量删除" onclick="shan()" />
+		<table border='1'>
+			<th><input type="checkbox" name="pi" id="pi" onclick="quan()">ID</th>
+			<th>图书名称</th>
+			<th>作者</th>
+			<th>封面</th>
+			<th>内容</th>
+			<th>类型</th>
+			<th>操作</th>
+			<foreach name='list' item="v">
+				<tr>
+					<td><input type="checkbox" name="liang" id="liang" value="{$v.id}">{$v.id}</td>
+					<td>{$v.b_name}</td>
+					<td>{$v.author}</td>
+					<td>
+					<img src="__PUBLIC__/{$v.b_cover}" width="200" height="200"/>
+					</td>
+					<td>{$v.b_content}</td>
+					<td>{$v.c_name}</td>
+					<td><a href="__URL__/delone/id/{$v.id}">删除</a></td>
+				</tr>
+			</foreach>
+		</table>
+		{$page}
+	</body>
+</html>
+<script>
+	function sousuo(){
+		var search=document.getElementById('search').value;
+		//alert(search);
+		var ajax=new XMLHttpRequest();
+		ajax.open('get','__URL__/sel_list?search='+search,true);
+		ajax.send();
+		ajax.onreadystatechange=function(){
+			if(ajax.readyState==4&&ajax.status==200){
+				//alert(ajax.responseText);
+				document.getElementById('list').innerHTML=ajax.responseText;
+			}
+		}
+	}
+	function quan(){
+		var se=document.getElementById('pi');
+		var si=document.getElementsByName('liang');
+		for(var i=0;i<si.length;i++)
+	}
+	function shan(){
+		var pi=document.getElementById('pi');
+		var liang=document.getElementsByName('liang');
+		//alert(liang);
+		str="";
+		for(var i=0;i<liang.length;i++){
+			if(liang[i].checked==true){
+				str=str+','+liang[i].value;
+			}
+		}
+		id=str.substr(1);
+		//alert(id);
+		var ajax=new XMLHttpRequest();
+		ajax.open('get','__URL__/del?id='+id,true);
+		ajax.send();
+		ajax.onreadystatechange=function(){
+			if(ajax.readyState==4&&ajax.status==200){
+				//alert(ajax.responseText);
+				document.getElementById('list').innerHTML=ajax.responseText;
+			}
+		}
+	}
+</script>
